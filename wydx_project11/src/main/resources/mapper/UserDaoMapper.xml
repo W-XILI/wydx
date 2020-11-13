@@ -1,0 +1,8 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ibm.cn.mapper.UserMapper">
+
+	<!-- 插入用户 -->
+	<insert id="addUser" parameterType="com.ibm.cn.entity.User">
+		insert into t_user(id,username,realname,password,sex) values(#{id},#{username},#{realname},#{password},#{sex})
+	</insert>
+</mapper>

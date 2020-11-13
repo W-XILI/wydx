@@ -10,4 +10,5 @@ public class WydxProject11Application {
 		SpringApplication.run(WydxProject11Application.class, args);
 	}
 
+	
 }

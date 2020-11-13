@@ -20,6 +20,7 @@ import com.ibm.cn.service.BookService;
 @ResponseBody
 public class BookController {
 	
+        //自动注入
 	@Autowired
 	BookService bookService;
 	

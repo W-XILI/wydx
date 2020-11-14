@@ -15,4 +15,8 @@ public class UserService {
 	public int addUser(User user) {
 		return userMapper.addUser(user);
 	}
+	
+	public User findUser(String username,String password) {
+		return userMapper.findUser(username, password);
+	}
 }

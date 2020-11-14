@@ -3,6 +3,12 @@
 
 	<!-- 插入用户 -->
 	<insert id="addUser" parameterType="com.ibm.cn.entity.User">
-		insert into t_user(id,username,realname,password,sex) values(#{id},#{username},#{realname},#{password},#{sex})
+		insert into t_user(username,realname,password,sex) values(#{username},#{realname},#{password},#{sex})
 	</insert>
+	
+	<!-- 根据用户名和密码查找用户 -->
+	<select id="findUser" parameterType="com.ibm.cn.entity.User" resultType="com.ibm.cn.entity.User">
+		select * from t_user where username=#{username} and password=#{password}
+	</select>
+	
 </mapper>

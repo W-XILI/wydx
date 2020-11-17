@@ -19,4 +19,7 @@ public interface EmployeeMapper {
 	
 	//更新员工信息
 	public int updataEmp(Employee emp);
+	
+	//根据id查询员工信息
+	public Employee getEmpById(Integer id);
 }

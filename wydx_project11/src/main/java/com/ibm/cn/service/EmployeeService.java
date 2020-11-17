@@ -34,4 +34,8 @@ public class EmployeeService {
 		return employeeMapper.updataEmp(emp);
 	}
 	
+	public Employee getEmpById(Integer id) {
+		return employeeMapper.getEmpById(id);
+	}
+	
 }

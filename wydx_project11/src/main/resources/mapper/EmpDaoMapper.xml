@@ -18,4 +18,9 @@
 		WHERE id=#{id}
 	</update>
 	
+	<!-- 根据id查询数据 -->
+	<select id="getEmpById" parameterType="Integer" resultType="com.ibm.cn.entity.Employee">
+		select * from t_emp where id=#{id}
+	</select>
+	
 </mapper>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>员工管理信息</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        .user {
+            width: 100%;
+            margin: 0px auto;
+        }
+        
+        .title {
+            background: linear-gradient(45deg, #ec113a, #6f32e6);
+            height: 80px;
+            line-height: 80px;
+            margin: 0px auto;
+            text-align: center;
+        }
+        
+        h2 {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <h1>欢迎使用员工管理系统</h1>
+    </div>
+    <div>
+        <table class="user" border="1" cellpadding="1" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名字</th>
+                    <th>工资</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="emp:${emps}">
+                    <td th:text="${emp.id}"></td>
+                    <td>[[${emp.name}]]</td>
+                    <td th:text="${emp.salary}"></td>
+                    <td th:text="${emp.age}"></td>
+                    <!-- <td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}"></td> -->
+                    <td>
+                        <a class="btn btn-sm btn-primary" th:href="@{/emp/toUpdataEmp}+${emp.id}">编辑</a>
+                        <button th:attr="del_uri=@{/emp/del}+${emp.id}" class="btn btn-sm btn-danger deleteBtn">删除
+                    </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <h2><a class="btn btn-sm btn-success" href="emp" th:href="@{/emp/toAddEmp}">员工添加</a></h2>
+</body>
+
+</html>

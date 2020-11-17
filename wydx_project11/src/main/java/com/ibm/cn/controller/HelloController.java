@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HelloController {
 	
-	@RequestMapping("/login")
+	@RequestMapping("/tologin")
     public String index(){
         
         return "login";
-    } 
+    }
+	
+	@RequestMapping("/redirect")
+	public String redi() {
+		return "redirect:tologin";
+	}
 
 }

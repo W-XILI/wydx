@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎使用员工管理系统</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .bg {
+            text-align: center;
+            background: linear-gradient(45deg, #e6b9bf, #a0d7ec);
+            position: fixed;
+            margin-top: 0px;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+        }
+        
+        h1 {
+            color: rgb(69, 29, 133);
+            text-align: left;
+            font-weight: 800;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin: 20px;
+        }
+        
+        h2 {
+            color: rgb(69, 29, 133);
+            margin: 15px;
+        }
+        
+        .fillin {
+            margin: 15px;
+            margin-bottom: 10px;
+            background: transparent;
+        }
+        
+        .name {
+            border: 0;
+            border-bottom: 1px solid black;
+            background: transparent;
+        }
+        
+        .salary {
+            border: 0;
+            border-bottom: 1px solid black;
+            background: transparent;
+        }
+        
+        .age {
+            border: 0;
+            border-bottom: 1px solid black;
+            background: transparent;
+        }
+        
+        .bt_add {
+            text-align: center;
+            margin: 15px;
+            width: 75px;
+            height: 35px;
+            background: rgb(186, 247, 186);
+            color: rgb(69, 29, 133);
+            font-size: large;
+            font-weight: 600;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function check() {
+            window.open("show.html", "name1");
+            document.add.submit();
+        }
+    </script>
+
+
+</head>
+
+<body>
+
+    <div class="bg">
+        <h1>欢迎使用员工管理系统！</h1>
+        <br>
+        <h2>增加员工信息：</h2>
+        <form class="fillin" name="add" action="/emp/insertEmp" method="POST">
+            <div class="table">
+                名字： <input class="name" name="name" type="text" maxlength="30">
+                <br><br> 工资：
+                <input class="salary" type="text" name="salary" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+                <br><br> 年龄：
+                <input class="age" type="text" name="age" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+            </div>
+        </form>
+        <br>
+        <div>
+            <input class="bt_add" type="submit" name="b1" value="添加" target="name1" onclick="check()"></div>
+    </div>
+</body>
+
+</html>

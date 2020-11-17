@@ -25,16 +25,25 @@ public class EmpController {
 	EmployeeService employeeService;
 	
 	@GetMapping("/findAllEmp")
-	public List<Employee> getAllEmp() {
+	public String getAllEmp(Model model) {
 		List<Employee> emps = employeeService.findAllEmp();
+		model.addAttribute("emps", emps);
 		System.out.println(emps);
-		return emps;
+		return "show";
 	}
 	
 	@PostMapping("/insertEmp")
-	public String insertEmp(@RequestParam Employee emp) {
+	public String insertEmp(@RequestParam("name") String name,
+							@RequestParam("age") Integer age,
+							@RequestParam("salary") double salary) {
+		System.out.println(name+age+salary);
+		Employee emp = new Employee();
+		emp.setAge(age);
+		emp.setName(name);
+		emp.setSalary(salary);
 		employeeService.inserEmp(emp);
-		return "redirect:show";
+		
+		return "redirect:findAllEmp";
 	}
 	
 	@GetMapping("/del/{id}")

@@ -5,11 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>欢迎使用员工管理系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             margin: 0;
             height: 100%;
             width: 100%;
+            font-size: 18px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+        }
+        
+        form {
+            display: block;
         }
         
         .bg {
@@ -17,9 +26,20 @@
             background: linear-gradient(45deg, #e6b9bf, #a0d7ec);
             position: fixed;
             margin-top: 0px;
-            background-size: 100% 100%;
             width: 100%;
             height: 100%;
+        }
+        
+        .container {
+            width: 500px;
+            height: 380px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
         }
         
         h1 {
@@ -33,30 +53,17 @@
         
         h2 {
             color: rgb(69, 29, 133);
-            margin: 15px;
+            display: block;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
         }
         
-        .fillin {
+        .form-inline {
             margin: 15px;
             margin-bottom: 10px;
-            background: transparent;
-        }
-        
-        .name {
-            border: 0;
-            border-bottom: 1px solid black;
-            background: transparent;
-        }
-        
-        .salary {
-            border: 0;
-            border-bottom: 1px solid black;
-            background: transparent;
-        }
-        
-        .age {
-            border: 0;
-            border-bottom: 1px solid black;
             background: transparent;
         }
         
@@ -72,6 +79,28 @@
             border-radius: 5px;
             border: none;
             cursor: pointer;
+        }
+        
+        .form-control {
+            display: block;
+            width: 100%;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        }
+        
+        .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            font-size: 16px;
+            width: 220px;
         }
     </style>
     <script>
@@ -89,20 +118,26 @@
     <div class="bg">
         <h1>欢迎使用员工管理系统！</h1>
         <br>
-        <h2>增加员工信息：</h2>
-        <form class="fillin" name="add" action="/emp/insertEmp" method="POST">
-            <div class="table">
-                名字： <input class="name" name="name" type="text" maxlength="30">
-                <br><br> 工资：
-                <input class="salary" type="text" name="salary" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
-                <br><br> 年龄：
-                <input class="age" type="text" name="age" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+        <div class="container">
+
+            <div class="form-signin">
+                <h2 class="form-signin-heading">增加员工信息：</h2>
+
+                <form class="form-inline" name="add" action="/emp/insertEmp" method="POST">
+                    <div class="form-group">
+                        <label for="exampleInputName2">姓名： </label> <input class="form-control" id="exampleInputName2" name="name" type="text" maxlength="30">
+                        <br><br>
+                        <label for="exampleInputName2">工资： </label> <input class="form-control" id="exampleInputName2" type="text" name="salary" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+                        <br><br>
+                        <label for="exampleInputName2">年龄： </label> <input class="form-control" id="exampleInputName2" type="text" name="age" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+                    </div>
+                </form>
+                <br>
+                <input class="bt_add" type="submit" name="b1" value="添加" target="name1" onclick="check()">
             </div>
-        </form>
-        <br>
-        <div>
-            <input class="bt_add" type="submit" name="b1" value="添加" target="name1" onclick="check()"></div>
+        </div>
     </div>
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
 </html>

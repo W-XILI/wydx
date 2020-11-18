@@ -25,8 +25,10 @@ public class EmpController {
 	EmployeeService employeeService;
 	
 	@GetMapping("/findAllEmp")
+	
 	public String getAllEmp(Model model) {
 		List<Employee> emps = employeeService.findAllEmp();
+		
 		model.addAttribute("emps", emps);
 		System.out.println(emps);
 		return "show";
@@ -49,7 +51,7 @@ public class EmpController {
 	@GetMapping("/del/{id}")
 	public String delEmp(@PathVariable Integer id) {
 		employeeService.delEmp(id);
-		return "删除成功";
+		return "redirect:../findAllEmp";
 	}
 	
 	@PostMapping("/updataEmp")
@@ -68,8 +70,9 @@ public class EmpController {
 	public String toUpdataEmp(@PathVariable Integer id,
 							  Model model) {
 		Employee employee= employeeService.getEmpById(id);
-		System.out.println(employee);
-		return "index";
+		model.addAttribute("emp", employee);
+//		System.out.println(employee);
+		return "editEmp";
 		
 	}
 }	

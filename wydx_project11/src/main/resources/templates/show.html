@@ -53,8 +53,8 @@
                     <td th:text="${emp.age}"></td>
                     <!-- <td th:text="${#dates.format(emp.birth, 'yyyy-MM-dd HH:mm')}"></td> -->
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/emp/toUpdataEmp}+${emp.id}">编辑</a>
-                        <button th:attr="del_uri=@{/emp/del}+${emp.id}" class="btn btn-sm btn-danger deleteBtn">删除
+                        <a class="btn btn-sm btn-primary" th:href="@{/emp/toUpdataEmp/{id}(id=${emp.id})">编辑</a>
+                        <a th:href="@{/emp/del/{id}(id=${emp.id})}" class="btn btn-sm btn-danger deleteBtn">删除</a>
                     </button>
                     </td>
                 </tr>

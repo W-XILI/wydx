@@ -22,4 +22,7 @@ public interface EmployeeMapper {
 	
 	//根据id查询员工信息
 	public Employee getEmpById(Integer id);
+	
+	//根据名字查员工
+	public Employee getEmpByName(String name);
 }

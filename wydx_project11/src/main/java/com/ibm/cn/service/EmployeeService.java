@@ -38,4 +38,9 @@ public class EmployeeService {
 		return employeeMapper.getEmpById(id);
 	}
 	
+	//根据名字查员工
+	public Employee getEmpByName(String name) {
+		return employeeMapper.getEmpByName(name);
+	}
+	
 }

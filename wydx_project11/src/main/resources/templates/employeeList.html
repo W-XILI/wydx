@@ -5,18 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>layout 后台大布局 - Layui</title>
-    <link rel="stylesheet" href="./layui/css/layui.css">
+    <link rel="stylesheet" href="../layui/css/layui.css"></link>
 </head>
 
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo">layui 后台布局</div>
+            <div class="layui-logo">员工管理系统后台</div>
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="">控制台</a></li>
-                <li class="layui-nav-item"><a href="">商品管理</a></li>
-                <li class="layui-nav-item"><a href="">用户</a></li>
+                <li class="layui-nav-item layui-this"><a href="/emp/findAllEmp">主页</a></li>
+                <li class="layui-nav-item"><a href="/emp/toAddEmp">添加员工</a></li>
+                <li class="layui-nav-item"><a href="">表格转换</a></li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">其它系统</a>
                     <dl class="layui-nav-child">
@@ -36,7 +36,7 @@
                         <dd><a href="">安全设置</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">退出登陆</a></li>
+                <li class="layui-nav-item"><a href="/tologin">退出登陆</a></li>
             </ul>
         </div>
 
@@ -67,81 +67,141 @@
 
         <div class="layui-body">
             <!-- 内容主体区域 -->
-            <div style="padding: 15px;">主题</div>
+            <div class="layui-btn-group demoTable">
+                <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+                <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+                <button class="layui-btn" data-type="isAll">验证是否全选</button>
+            </div>
 
-            <table class="layui-hide" id="test" lay-filter="test"></table>
+            <table class="layui-table" lay-data="{width:900, height:'full-180', 
+            url:'http://localhost:9090/test', 
+            page:true, id:'idTest'
+            }" lay-filter="demo" lay-skin="row">
+                <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox', width:120,fixed: 'left',align:'center'}"></th>
+                        <th lay-data="{field:'id', width:120,align:'center', sort: true, fixed: true}">ID</th>
+                        <th lay-data="{field:'name',width:120,align:'center' }">用户名</th>
+                        <th lay-data="{field:'salary', width:120,align:'center', sort: true}">工资</th>
+                        <th lay-data="{field:'age',width:120,align:'center'}">年龄</th>
+                        <th lay-data="{fixed: 'right', width:300, align:'center', toolbar: '#barDemo'}"></th>
+                    </tr>
+                </thead>
+            </table>
 
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
 
-            <script src="./static/layui/layui.js" charset="utf-8"></script>
+            <script src="../layui/layui.js" charset="utf-8"></script>
             <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-
             <script>
                 layui.use('table', function() {
                     var table = layui.table;
+                    //监听表格复选框选择
+                    table.on('checkbox(demo)', function(obj) {
+                        console.log(obj)
+                    });
+                    layui.use('element', function() {
+                        var element = layui.element;
 
-                    table.render({
-                        elem: '#test',
-                        url: 'http://localhost:9090/test',
-                        toolbar: true,
-                        title: '用户数据表',
-                        totalRow: true,
-                        cols: [
-                            [{
-                                field: 'id',
-                                title: 'id',
-                                width: 80,
-                                fixed: 'left',
-                                unresize: true,
-                                sort: true,
-                                totalRowText: '合计行'
-                            }, {
-                                field: 'name',
-                                title: '姓名',
-                                width: 120,
-                                edit: 'text'
-                            }, {
-                                field: 'salary',
-                                title: '工资',
-                                width: 150,
-                                edit: 'text'
-                            }, {
-                                field: 'age',
-                                title: '年龄',
-                                width: 100,
-                                sort: true,
-                                totalRow: true
-                            }]
-                        ],
-                        page: true,
-                        response: {
-                            statusCode: 200 //重新规定成功的状态码为 200，table 组件默认为 0
-                        },
-                        parseData: function(res) { //将原始数据解析成 table 组件所规定的数据
-                            return {
-                                "code": res.status, //解析接口状态
-                                "msg": res.message, //解析提示文本
-                                "count": res.total, //解析数据长度
-                                "data": res.rows.item //解析数据列表
-                            };
+                    });
+                    //监听工具条
+                    table.on('tool(demo)', function(obj) {
+                        var data = obj.data;
+                        if (obj.event === 'detail') {
+                            layer.msg('ID：' + data.id + ' 的查看操作');
+                            layer.alert('员工名：' + data.name + '<br>年龄：' + data.age + '<br>工资：' + data.salary);
+                        } else if (obj.event === 'del') {
+                            layer.confirm('真的删除行么', function(index) {
+
+                                $.ajax({
+                                    url: 'http://localhost:9090/emp/del/' + data.id,
+                                    type: 'GET',
+                                    success: function(data) {
+                                        layer.msg("删除成功", {
+                                            icon: 6
+                                        })
+                                    },
+                                    error: function(err) {
+                                        console.log("err...", err)
+                                    }
+
+                                })
+                                obj.del();
+                                layer.close(index);
+                            });
+                        } else if (obj.event === 'edit') {
+                            layer.alert('编辑行：<br>' + JSON.stringify(data));
+                            layer.prompt({
+                                formType: 2,
+                                title: '修改 ID 为 [' + data.id + '] 的工资',
+                                value: data.salary
+                            }, function(value, index) {
+                                //这里一般是发送修改的Ajax请求
+                                EidtUv(data, value, index, obj);
+
+                            });
                         }
+                    });
+
+                    function EidtUv(data, value, index, obj) {
+                        $.ajax({
+                            url: "http://localhost:9090/emp/toUpdataEmp/" + data.id,
+                            type: "GET",
+                            success: function(data) {
+
+                                if (data.state == 1) {
+                                    //关闭弹框
+                                    layer.close(index);
+                                    //同步更新表格和缓存对应的值
+                                    obj.update({
+                                        salary: "data.salary"
+                                    });
+                                    layer.msg("修改成功", {
+                                        icon: 6
+                                    });
+                                } else {
+                                    layer.msg("修改失败", {
+                                        icon: 5
+                                    });
+                                }
+                            }
+
+                        });
+                    }
+
+                    var $ = layui.$,
+                        active = {
+                            getCheckData: function() { //获取选中数据
+                                var checkStatus = table.checkStatus('idTest'),
+                                    data = checkStatus.data;
+
+                                for (var i = data.length; i--; i = 0) {
+                                    layer.alert('员工名：' + i.name + '<br>年龄：' + i.age + '<br>工资：' + i.salary)
+                                }
+
+                            },
+                            getCheckLength: function() { //获取选中数目
+                                var checkStatus = table.checkStatus('idTest'),
+                                    data = checkStatus.data;
+                                layer.msg('选中了：' + data.length + ' 个');
+                            },
+                            isAll: function() { //验证是否全选
+                                var checkStatus = table.checkStatus('idTest');
+                                layer.msg(checkStatus.isAll ? '全选' : '未全选')
+                            }
+                        };
+
+                    $('.demoTable .layui-btn').on('click', function() {
+                        var type = $(this).data('type');
+                        active[type] ? active[type].call(this) : '';
                     });
                 });
             </script>
-        </div>
 
-        <div class="layui-footer">
-            <!-- 底部固定区域 -->
-            © 员工管理系统 - 底部固定区域
-        </div>
-    </div>
-    <script src="./layui/layui.js"></script>
-    <script>
-        //JavaScript代码区域
-        layui.use('element', function() {
-            var element = layui.element;
-
-        });
-    </script>
 </body>
 
 </html>

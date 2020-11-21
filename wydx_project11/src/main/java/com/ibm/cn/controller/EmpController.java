@@ -1,11 +1,18 @@
 package com.ibm.cn.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.websocket.server.PathParam;
 
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.ibatis.javassist.expr.NewArray;
+import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ibm.cn.entity.Employee;
 import com.ibm.cn.service.EmployeeService;
 
+import net.sf.json.JSONArray;
+@CrossOrigin
 @Controller
 @RequestMapping("/emp")
 public class EmpController {
@@ -25,13 +34,20 @@ public class EmpController {
 	EmployeeService employeeService;
 	
 	@GetMapping("/findAllEmp")
-	
 	public String getAllEmp(Model model) {
-		List<Employee> emps = employeeService.findAllEmp();
+		List<Employee> emps = this.employeeService.findAllEmp();
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", " ");
+		result.put("count", 100);
+		JSONArray array = JSONArray.fromObject(emps);
+		result.put("data", array);	
+//		model.addAttribute("emps", emps);
 		
-		model.addAttribute("emps", emps);
+		model.addAttribute("result",result);
 		System.out.println(emps);
-		return "show";
+		System.out.println(result);
+		return "employeeList";
 	}
 	
 	@PostMapping("/insertEmp")
@@ -49,9 +65,12 @@ public class EmpController {
 	}
 	
 	@GetMapping("/del/{id}")
-	public String delEmp(@PathVariable Integer id) {
+	@ResponseBody
+	public Object delEmp(@PathVariable Integer id) {
 		employeeService.delEmp(id);
-		return "redirect:../findAllEmp";
+		Map<String, String> responseMap=new HashMap<String, String>();
+		responseMap.put("info", "deleted success");
+		return responseMap;
 	}
 	
 	@PostMapping("/updataEmp")
@@ -67,12 +86,12 @@ public class EmpController {
 	}
 	
 	@GetMapping("/toUpdataEmp/{id}")
-	public String toUpdataEmp(@PathVariable Integer id,
-							  Model model) {
+	@ResponseBody
+	public Object toUpdataEmp(@PathVariable Integer id) {
 		Employee employee= employeeService.getEmpById(id);
-		model.addAttribute("emp", employee);
-//		System.out.println(employee);
-		return "editEmp";
+		Map<String, String> responseMap=new HashMap<String, String>();
+		responseMap.put("info", "update success");
+		return responseMap;
 		
 	}
 }	
